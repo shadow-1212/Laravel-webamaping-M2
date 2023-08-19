@@ -1,7 +1,7 @@
 <div x-data="map()" x-init="initComponent()"
     x-on:new-monument.window="gotoMonument(JSON.parse($event.detail.monument))">
     <div x-ref="map" class="relative h-[600px] overflow-clip rounded-md border border-slate-300 shadow-lg">
-        <div class="ol-unselectable ol-control absolute top-9 right-8 z-10 rounded-md bg-white bg-opacity-75">
+        <div class="absolute z-10 bg-white bg-opacity-75 rounded-md ol-unselectable ol-control top-9 right-8">
             <button x-on:click.prevent="gotoCurrentLocation()" title="Go to my location"
                 class="absolute inset-0 flex items-center justify-center">
                 <!-- Heroicon name: outline/mappin -->
@@ -13,7 +13,7 @@
                 </svg>
             </button>
         </div>
-        <div class="ol-unselectable ol-control absolute top-2 right-8 z-10 rounded-md bg-white bg-opacity-75">
+        <div class="absolute z-10 bg-white bg-opacity-75 rounded-md ol-unselectable ol-control top-2 right-8">
             <button x-on:click.prevent="legendOpened = ! legendOpened" title="Open/Close details"
                 class="absolute inset-0 flex items-center justify-center">
                 <!-- Heroicon name: outline/globe -->
@@ -29,8 +29,8 @@
             x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
             x-transition:leave="transition-opacity duration-300" x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
-            class="absolute right-0 top-16 left-2 bottom-2 z-10 max-w-sm rounded-md border border-slate-300 bg-white bg-opacity-50 shadow-sm">
-            <div class="absolute inset-1 overflow-y-auto rounded-md bg-white bg-opacity-75 p-2 pt-1">
+            class="absolute right-0 z-10 max-w-sm bg-white bg-opacity-50 border rounded-md shadow-sm top-16 left-2 bottom-2 border-slate-300">
+            <div class="absolute p-2 pt-1 overflow-y-auto bg-white bg-opacity-75 rounded-md inset-1">
                 <div class="flex items-center justify-between pr-1">
                     <div class="flex justify-start space-x-3">
                         <h3 x-on:click.prevend="activeTab = 'legend'" class="cursor-pointer text-slate-700"
@@ -46,10 +46,10 @@
                 </div>
                 <ul x-show="activeTab === 'legend'" x-transition:enter="transition-opacity duration-300"
                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                    class="mt-2 space-y-1 rounded-md border border-slate-300 bg-white p-1">
+                    class="p-1 mt-2 space-y-1 bg-white border rounded-md border-slate-300">
                     <template x-for="(layer, index) in map.getAllLayers().reverse()" :key="index">
                         <li x-show="layer.get('label')" class="flex items-center p-0.5">
-                            <div x-id="['legend-range']" class="w-full rounded-md border border-gray-300 px-2 py-1">
+                            <div x-id="['legend-range']" class="w-full px-2 py-1 border border-gray-300 rounded-md">
                                 <div class="space-y-1">
                                     <label x-bind:for="$id('legend-range')" class="flex items-center">
                                         <span class="text-sm text-slate-600" x-text="layer.get('label')"></span>
@@ -69,22 +69,22 @@
                 </ul>
                 <div x-show="activeTab === 'monuments'" x-transition:enter="transition-opacity duration-300"
                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                    class="mt-2 rounded-md border border-slate-300 bg-white p-1">
+                    class="p-1 mt-2 bg-white border rounded-md border-slate-300">
                     <livewire:monuments.index />
                 </div>
                 <div x-show="activeTab === 'create-monument'" x-transition:enter="transition-opacity duration-300"
                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                    class="mt-2 rounded-md border border-slate-300 bg-white p-1">
+                    class="p-1 mt-2 bg-white border rounded-md border-slate-300">
                     <livewire:monuments.create />
                 </div>
             </div>
         </div>
-        <div x-cloak x-ref="popup" class="ol-popup ol-control transition">
+        <div x-cloak x-ref="popup" class="transition ol-popup ol-control">
             <div class="m-0.5 rounded-md bg-white p-2">
                 <div class="flex justify-between">
                     <h3 class="text-xs font-medium text-slate-400">Monument</h3>
                     <a href="#" title="Close" x-on:click.prevent="closePopup"
-                        class="-mt-1 font-black text-slate-400 transition hover:text-slate-600 focus:text-slate-600 focus:outline-none">&times;</a>
+                        class="-mt-1 font-black transition text-slate-400 hover:text-slate-600 focus:text-slate-600 focus:outline-none">&times;</a>
                 </div>
                 <div x-ref="popupContent" class="mt-2 min-h-[200px] overflow-y-auto"></div>
             </div>
