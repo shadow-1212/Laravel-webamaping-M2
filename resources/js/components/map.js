@@ -8,6 +8,7 @@ import Overlay from "ol/Overlay.js";
 import TileWMS from 'ol/source/TileWMS.js';
 import VectorSource from "ol/source/Vector.js";
 import VectorLayer from "ol/layer/Vector.js";
+
 import {
     Icon,
     Style,
@@ -111,8 +112,8 @@ document.addEventListener("alpine:init", () => {
                     ],
                     view: new View({
                         projection: "EPSG:4326",
-                        center: [0, 0],
-                        zoom: 3,
+                        center: [ 47.41923179671037, -21.263888003708697],
+                        zoom: 11,
                     }),
                     overlays: [
                         new Overlay({
