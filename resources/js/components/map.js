@@ -73,16 +73,28 @@ document.addEventListener("alpine:init", () => {
                     label: 'World Administrative Boundaries',
                 });
 
-                let worldRiversLayer = new TileLayer({
+                let riversLayer = new TileLayer({
                     source: new TileWMS({
                         url: 'http://localhost:8080/geoserver/wms',
                         params: {
-                            'LAYERS': 'laravelgis:world_rivers',
+                            'LAYERS': 'laravelgis:rivers',
                             'TILED': true
                         },
                         serverType: 'geoserver',
                     }),
-                    label: 'World Rivers',
+                    label: 'Rivers',
+                });
+
+                let routesLayer = new TileLayer({
+                    source: new TileWMS({
+                        url: 'http://localhost:8080/geoserver/wms',
+                        params: {
+                            'LAYERS': 'laravelgis:routes',
+                            'TILED': true
+                        },
+                        serverType: 'geoserver',
+                    }),
+                    label: 'Routes',
                 });
 
                 let drawLayer = new VectorLayer({
@@ -105,7 +117,8 @@ document.addEventListener("alpine:init", () => {
                             label: 'OpenStreetMap',
                         }),
                         worldAdministrativeBoundariesLayer,
-                        worldRiversLayer,
+                        riversLayer,
+                        routesLayer,
                         buildingsLayer,
                         this.monumentsLayer,
                         drawLayer
