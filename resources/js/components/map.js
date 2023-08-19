@@ -1,4 +1,4 @@
-import Map from "ol/Map.js";
+    import Map from "ol/Map.js";
 import View from "ol/View.js";
 import {
     Tile as TileLayer
@@ -48,11 +48,23 @@ document.addEventListener("alpine:init", () => {
                     label: 'Monuments',
                 });
 
+                let buildingsLayer = new TileLayer({
+                    source: new TileWMS({
+                        url: 'http://localhost:8080/geoserver/wms',
+                        params: {
+                            'LAYERS': 'laravelgis:buildings',
+                            'TILED': true
+                        },
+                        serverType: 'geoserver',
+                    }),
+                    label: 'Buildings',
+                });
+
                 let worldAdministrativeBoundariesLayer = new TileLayer({
                     source: new TileWMS({
                         url: 'http://localhost:8080/geoserver/wms',
                         params: {
-                            'LAYERS': 'laravelgis:world-administrative-boundaries',
+                            'LAYERS': 'laravelgis:world_administrative_boundaries',
                             'TILED': true
                         },
                         serverType: 'geoserver',
@@ -64,7 +76,7 @@ document.addEventListener("alpine:init", () => {
                     source: new TileWMS({
                         url: 'http://localhost:8080/geoserver/wms',
                         params: {
-                            'LAYERS': 'laravelgis:world-rivers',
+                            'LAYERS': 'laravelgis:world_rivers',
                             'TILED': true
                         },
                         serverType: 'geoserver',
@@ -93,6 +105,7 @@ document.addEventListener("alpine:init", () => {
                         }),
                         worldAdministrativeBoundariesLayer,
                         worldRiversLayer,
+                        buildingsLayer,
                         this.monumentsLayer,
                         drawLayer
                     ],

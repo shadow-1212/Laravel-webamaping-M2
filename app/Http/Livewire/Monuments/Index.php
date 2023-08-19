@@ -24,12 +24,12 @@ class Index extends Component
     {
         return view('livewire.monuments.index', [
             'monuments' => Monument::query()
-                // ->leftJoin('world-administrative-boundaries', DB::raw('st_within(monuments.geom, "world-administrative-boundaries".geom)'), '=', DB::raw('true'))
-                ->selectRaw('monuments.name as name, "world-administrative-boundaries".name as country, st_asgeojson(monuments.*) as geojson')
+                ->leftJoin('world_administrative_boundaries', DB::raw('st_within(monuments.geom, "world_administrative_boundaries".geom)'), '=', DB::raw('true'))
+                ->selectRaw('monuments.name as name, "world_administrative_boundaries".adm3_en as country, st_asgeojson(monuments.*) as geojson')
                 ->when($this->search, function ($query, $search) {
                     $search = '%' . $search . '%';
-                    $query->where('monuments.name', 'ilike', $search);
-                        // ->orWhere('world-administrative-boundaries.name', 'ilike', $search);
+                    $query->where('monuments.name', 'ilike', $search)
+                        ->orWhere('world_administrative_boundaries.name', 'ilike', $search);
                 })
                 ->orderBy('monuments.name')
                 ->simplePaginate(10)
